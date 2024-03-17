@@ -1,0 +1,128 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body
+{
+    background-color: #6165FF;
+}
+
+.nav-bar
+{
+    height: 10vh !important;
+    background-color: rgba(51,51,51) !important;
+}
+
+#to-do-logo
+{
+    width: 48px;
+}
+
+.main-row, .loginForm, .h-100
+{
+    height: 75vh !important;
+}
+
+.nav-list li
+{
+    display: inline-block;
+}
+
+.nav-link:hover
+{
+    color: #6165FF;
+}
+
+.userPhoto
+{
+    width: 130px;
+    height: 130px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+#uName, #uPwd, #uconfPwd
+{
+    border-radius: 2rem;
+    padding: 0.8rem 3.5rem;
+    border: none;
+}
+
+.uNameBlk, .uPwdBlk, .uConfPwdBlk
+{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.userIcon, .pwdIcon, .cPwdIcon
+{
+    position: absolute;
+    top: 1rem;
+    left: 1.5rem;
+    font-size: 20px;
+}
+
+.cPwdIcon
+{
+    top: 2rem;
+}
+
+#loginBtn
+{
+    border-radius: 2rem !important; 
+    padding: 0.8rem 0;
+    font-weight: bold;
+    background-color: rgba(51,51,51, 1);
+}
+
+#loginBtn:hover
+{
+    background-color: rgba(51,51,51, 0.9);
+}
+
+.forgotUname, .creatAcLink, .forgotPwd
+{
+    color: white;
+    text-decoration: none;
+}
+
+.forgotUname:hover , .creatAcLink:hover, .forgotPwd:hover
+{
+    color: black;
+}
+
+#signUpBtn, #loginLink
+{
+    background-color: transparent !important;
+    color: White !important;
+}
+
+#signUpBtn:hover, #loginLink:hover
+{
+    color: black !important;
+}
+
+#creatAccount2
+{
+    display: none;
+}
+
+#helpPara, .userHelp
+{
+    margin-bottom: 0.5rem !important;
+}
+
+.footer-row
+{
+    height: 7vh !important;
+}
+
+.nkg-logo
+{
+    width: 6rem;
+    height: 2rem;
+}

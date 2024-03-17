@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do-App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="./loginPage.css">
+    <link rel="icon" type="image/x-icon" href="./Images/to-do-icon2.png">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row nav-bar justify-content-around align-items-center">
+            <div class="col-2">
+                <div class="logo d-flex justify-content-center align-items-center">
+                    <img src="./Images/to-do-icon2.png" alt="to-do-logo" id="to-do-logo">
+                    <p class="logoText mb-0 fs-3 ms-2 text-white">To Do</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <ul class="nav-list text-white mb-0 d-flex justify-content-evenly">
+                    <li><a href="#" class="nav-link">Home</a></li>
+                    <li><a href="#" class="nav-link">Products</a></li>
+                    <li><a href="#" class="nav-link">Services</a></li>
+                    <li><a href="#" class="nav-link">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row justify-content-evenly align-items-center main-row my-4">
+            <div class="col-5">
+                <div id="loginPage-slideshow" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img src="./Images/q1.webp" class="d-block w-100 h-100" alt="image">
+                      </div>
+                      <div class="carousel-item">
+                        <img src="./Images/q2.webp" class="d-block w-100 h-100" alt="image">
+                      </div>
+                      <div class="carousel-item">
+                        <img src="./Images/q3.webp" class="d-block w-100 h-100" alt="image">
+                      </div>
+                      <div class="carousel-item active">
+                        <img src="./Images/q4.jpg" class="d-block w-100 h-100" alt="image">
+                      </div>
+                      <div class="carousel-item">
+                        <img src="./Images/q5.webp" class="d-block w-100 h-100" alt="image">
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="loginForm">
+                    <div class="mb-4" id="userProfile">
+                        <div class="d-flex justify-content-center mb-3" id="user">
+                            <img src="./Images/user.svg" alt="User Photo" class="userPhoto">
+                        </div>
+                        <h4 class="text-center text-white" id="userName">User Name</h4>
+                    </div>
+                    <div class="login-form">
+                        <div class="mb-4" id="userCredentials">
+                            <div class="uNameBlk">
+                                <i class="fa-solid fa-user userIcon"></i>
+                                <input type="text" name="uName" class="form-control mb-3" id="uName" placeholder="Username">
+                            </div>
+                            <div class="uPwdBlk">
+                                <i class="fa-solid fa-lock pwdIcon"></i>
+                                <input type="password" name="pwd" id="uPwd" class="form-control" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="lBtn mb-4">
+                            <button class="btn w-100 text-white" id="loginBtn">Login</button>
+                        </div>
+                    </div>
+                    <div class="userHelp text-center text-white fs-6">
+                        <p id="helpPara">
+                            Forgot&nbsp;<a href="#" class="forgotUname">Username</a>&nbsp;/&nbsp;<a href="#" class="forgotPwd">Password</a>&nbsp;
+                        </p>
+                        <div id="creatAc">
+                            <p id="creatAccount1">
+                                Don't have an account ?
+                                <button class="btn" id="signUpBtn">Sign Up</button>
+                            </p>
+                            <p id="creatAccount2">
+                                Already have an account ?
+                                <button class="btn" id="loginLink">Login</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center footer-row">
+            <div class="col-12 m-0 p-0 d-flex justify-content-center align-items-center">
+                <p class="authourMsg mb-0 text-white">Developed by &nbsp;</p>
+                <img src="./Images/NKG-logo.png" alt="NKG-Logo" class="nkg-logo">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./logiPage.js"></script>
+</body>
+</html>

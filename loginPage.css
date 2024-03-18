@@ -36,12 +36,17 @@ body
     color: #6165FF;
 }
 
-.userPhoto
+#userPhoto
 {
     width: 130px;
     height: 130px;
     background-color: white;
     border-radius: 50%;
+}
+
+#picUpload
+{
+    display: none;
 }
 
 #uName, #uPwd, #uconfPwd
@@ -51,11 +56,16 @@ body
     border: none;
 }
 
-.uNameBlk, .uPwdBlk, .uConfPwdBlk
+.uNameBlk, .uPwdBlk, #uConfPwdBlk
 {
     position: relative;
     display: flex;
     align-items: center;
+}
+
+#uConfPwdBlk
+{
+    display: none;
 }
 
 .userIcon, .pwdIcon, .cPwdIcon
@@ -66,17 +76,17 @@ body
     font-size: 20px;
 }
 
-.cPwdIcon
-{
-    top: 2rem;
-}
-
-#loginBtn
+#loginBtn, #signUp
 {
     border-radius: 2rem !important; 
     padding: 0.8rem 0;
     font-weight: bold;
     background-color: rgba(51,51,51, 1);
+}
+
+#signUp
+{
+    display: none;
 }
 
 #loginBtn:hover

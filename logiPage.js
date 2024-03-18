@@ -6,33 +6,48 @@ let helpPara = document.getElementById('helpPara');
 let loginLink = document.getElementById('loginLink');
 let creatAccount1 = document.getElementById('creatAccount1');
 let creatAccount2 = document.getElementById('creatAccount2');
+let uConfPwdBlk = document.getElementById('uConfPwdBlk');
 let loginBtn = document.getElementById('loginBtn');
 let uName = document.getElementById('uName');
 let uPwd = document.getElementById('uPwd');
-let user = {
-    Nkg : "123456",
-    Krg : 'abcdef',
-    Hkg : 'wxyz'
-};
+let signUp1 = document.getElementById('signUp');
+let picUpload = document.getElementById('picUpload');
+let userPhoto = document.getElementById('userPhoto');
+let photoUrlBff;
+let users = [];
 
-signUpBtn.addEventListener('click', signUp);
+
+class user
+{
+    constructor(userName, userPwd, photoUrl)
+    {
+        this.usrName = userName;
+        this.usrPwd = userPwd;
+        this.photoUrl = photoUrl;
+    }
+}
+
+
+signUpBtn.addEventListener('click', signUpPage);
 loginLink.addEventListener('click', loginPage);
 loginBtn.addEventListener('click', checkCredentials);
+signUp1.addEventListener('click', signUp);
+picUpload.addEventListener('change' , () => {
+    const fr = new FileReader();
+    fr.readAsDataURL(picUpload.files[0]);
 
-function signUp()
+    fr.addEventListener('load', () => {
+        photoUrlBff = fr.result; 
+    })
+})
+
+
+function signUpPage()
 {
-    userProfile.innerHTML =`
-        <div class="d-flex justify-content-evenly align-items-center mb-3" id="user">
-            <img src="./user.svg" alt="User Photo" class="userPhoto">
-            <input type="file" class="form-control w-50 mt-3" id="picUpload">
-        </div>
-    `;
-    userCredentials.innerHTML += `
-        <div class="uConfPwdBlk">
-            <i class="fa-solid fa-lock cPwdIcon"></i>
-            <input type="password" name="cPwd" id="uconfPwd" class="form-control mt-3" placeholder="Confirm Password">
-        </div>
-    `;
+    picUpload.style.display = 'block';
+    uConfPwdBlk.style.display = 'block';
+    loginBtn.style.display = 'none';
+    signUp1.style.display = 'block';
     helpPara.style.display = 'none';
     creatAccount1.style.display = 'none';
     creatAccount2.style.display = 'block';
@@ -40,25 +55,29 @@ function signUp()
 
 function loginPage()
 {
-    userProfile.innerHTML =`
-        <div class="d-flex justify-content-center mb-3" id="user">
-            <img src="./user.svg" alt="User Photo" class="userPhoto">
-        </div>
-        <h4 class="text-center text-white" id="userName">User Name</h4>
-    `;
-    userCredentials.innerHTML = `
-    <div class="uNameBlk">
-        <i class="fa-solid fa-user userIcon"></i>
-        <input type="text" name="uName" class="form-control mb-3" id="uName" placeholder="Username">
-    </div>
-    <div class="uPwdBlk">
-        <i class="fa-solid fa-lock pwdIcon"></i>
-        <input type="password" name="pwd" id="uPwd" class="form-control" placeholder="Password">
-    </div>
-    `;
+    picUpload.style.display = 'none';
+    uConfPwdBlk.style.display = 'none';
+    loginBtn.style.display = 'block';
+    signUp1.style.display = 'none';
     helpPara.style.display = 'block';
     creatAccount1.style.display = 'block';
     creatAccount2.style.display = 'none';
+}
+
+function signUp()
+{
+    const object = new user(uName.value, uPwd.value, photoUrlBff);
+    users.push(object);
+}
+
+const toastTrigger = document.getElementById('signUp')
+const toastLiveExample = document.getElementById('liveToast')
+
+if (toastTrigger) {
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+  toastTrigger.addEventListener('click', () => {
+    toastBootstrap.show()
+  })
 }
 
 function checkCredentials()
@@ -66,7 +85,7 @@ function checkCredentials()
     console.log(uName.value);
     if (uName.value in user)
     {
-        alert('Yeah User exists.');
+        console.log(uName.value);
     }
     else
     {
@@ -74,3 +93,21 @@ function checkCredentials()
     }
 
 }
+
+
+
+
+// class userData{
+//     constructor(uNameD){
+//         this.uNameD = uNameD;
+//     }
+// }
+
+// const users = [];
+
+// const object = new userData('Kanjibhai');
+// users.push(object);
+ 
+// for (var i = 0; i < users.length; i++){
+//   console.log(users[i].uNameD);
+// }

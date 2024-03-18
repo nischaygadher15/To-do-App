@@ -29,6 +29,19 @@
             </div>
         </div>
         <div class="row justify-content-evenly align-items-center main-row my-4">
+            <div class="toast-container top-0 start-20 p-3">
+                <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                    <img src="./Images/to-do-icon2.png" class="rounded me-2" alt="..." style="width: 1rem;">
+                    <strong class="me-auto">To Do</strong>
+                    <!-- <small>11 mins ago</small> -->
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        You have successfully Signed Up.
+                    </div>
+                </div>
+            </div>
             <div class="col-5">
                 <div id="loginPage-slideshow" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -53,8 +66,9 @@
             <div class="col-4">
                 <div class="loginForm">
                     <div class="mb-4" id="userProfile">
-                        <div class="d-flex justify-content-center mb-3" id="user">
-                            <img src="./Images/user.svg" alt="User Photo" class="userPhoto">
+                        <div class="d-flex justify-content-evenly align-items-center mb-3" id="user">
+                            <img src="./Images/user.svg" alt="User Photo" id="userPhoto">
+                            <input type="file" class="form-control w-50 mt-3" id="picUpload">
                         </div>
                         <h4 class="text-center text-white" id="userName">User Name</h4>
                     </div>
@@ -68,9 +82,14 @@
                                 <i class="fa-solid fa-lock pwdIcon"></i>
                                 <input type="password" name="pwd" id="uPwd" class="form-control" placeholder="Password">
                             </div>
+                            <div id="uConfPwdBlk">
+                                <i class="fa-solid fa-lock cPwdIcon"></i>
+                                <input type="password" name="cPwd" id="uconfPwd" class="form-control mt-3" placeholder="Confirm Password">
+                            </div>
                         </div>
                         <div class="lBtn mb-4">
                             <button class="btn w-100 text-white" id="loginBtn">Login</button>
+                            <button class="btn w-100 text-white" id="signUp">Sign Up</button>
                         </div>
                     </div>
                     <div class="userHelp text-center text-white fs-6">

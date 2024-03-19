@@ -18,6 +18,7 @@ let photoUrlBff;
 let users = [];
 let tstText = document.getElementById('tstText');
 let err = ['Password Do not Match'];
+
 class user
 {
     constructor(userName, userPwd, photoUrl)
@@ -33,6 +34,7 @@ signUpBtn.addEventListener('click', signUpPage);
 loginLink.addEventListener('click', loginPage);
 loginBtn.addEventListener('click', checkCredentials);
 signUp1.addEventListener('click', signUp);
+
 picUpload.addEventListener('change' , () => {
     const fr = new FileReader();
     fr.readAsDataURL(picUpload.files[0]);
@@ -56,6 +58,7 @@ function signUpPage()
 
 function loginPage()
 {
+    // userPhoto.setAttribute('src', "./Images/user.svg");
     picUpload.style.display = 'none';
     uConfPwdBlk.style.display = 'none';
     loginBtn.style.display = 'block';
@@ -69,16 +72,18 @@ function signUp()
 {
     if(uPwd.value == uconfPwd.value)
     {
+        userPhoto.setAttribute('src', "./Images/user.svg");
         uPwd.classList.remove('is-invalid');
         uconfPwd.classList.remove('is-invalid');
         const object = new user(uName.value, uPwd.value, photoUrlBff);
-        users.push(object);
-        console.log(users);
+        console.log(object);
+        localStorage.setItem(`${object.usrName}`, JSON.stringify(object));
         loginPage();
         uName.value = '';
         uPwd.value = '';
-        userPhoto.setAttribute('src', users[0].photoUrl);
-        userTag.innerText = users[0].usrName;
+        uconfPwd.value = '';
+        // userPhoto.setAttribute('src', object.photoUrl);
+        // userTag.innerText = object.usrName;
         tstText.innerText = 'You have successfully Signed Up.'
         toast();
     }
@@ -91,6 +96,7 @@ function signUp()
     }
 }
 
+
 const toastLiveExample = document.getElementById('liveToast')
 
 function toast(arg)
@@ -101,5 +107,19 @@ function toast(arg)
 
 function checkCredentials()
 {
-    // Authentication Code here
+    // Authentication
+    let userData = JSON.parse(localStorage.getItem(uName.value));
+    if( (userData !== null) && (userData.usrName == uName.value) && (userData.usrPwd == uPwd.value) )
+    { 
+        tstText.innerText = `Correct User and Password`;
+        toast();
+    }
+    else
+    {
+        tstText.innerText = `Invalid User/Password!!!.`;
+        tstText.innerHTML = '<p class="text-danger mb-0"><i class="fa-solid fa-circle-exclamation"></i>&nbsp;Invalid User/Password</p>'
+        toast();
+    }
 }
+
+

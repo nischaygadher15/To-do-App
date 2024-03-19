@@ -111,8 +111,10 @@ function checkCredentials()
     let userData = JSON.parse(localStorage.getItem(uName.value));
     if( (userData !== null) && (userData.usrName == uName.value) && (userData.usrPwd == uPwd.value) )
     { 
-        tstText.innerText = `Correct User and Password`;
+        tstText.innerHTML = '<p class="" mb-0"><i class="bi bi-check-circle-fill"></i>&nbsp;Welcom to To Do App, Successfully logged in.</p>';
         toast();
+        window.location.href = './to-do.html';
+        // location.replace('./to-do.html');
     }
     else
     {

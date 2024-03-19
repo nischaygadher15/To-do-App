@@ -10,13 +10,14 @@ let uConfPwdBlk = document.getElementById('uConfPwdBlk');
 let loginBtn = document.getElementById('loginBtn');
 let uName = document.getElementById('uName');
 let uPwd = document.getElementById('uPwd');
+let uconfPwd = document.getElementById('uconfPwd');
 let signUp1 = document.getElementById('signUp');
 let picUpload = document.getElementById('picUpload');
 let userPhoto = document.getElementById('userPhoto');
 let photoUrlBff;
 let users = [];
-
-
+let tstText = document.getElementById('tstText');
+let err = ['Password Do not Match'];
 class user
 {
     constructor(userName, userPwd, photoUrl)
@@ -66,48 +67,39 @@ function loginPage()
 
 function signUp()
 {
-    const object = new user(uName.value, uPwd.value, photoUrlBff);
-    users.push(object);
+    if(uPwd.value == uconfPwd.value)
+    {
+        uPwd.classList.remove('is-invalid');
+        uconfPwd.classList.remove('is-invalid');
+        const object = new user(uName.value, uPwd.value, photoUrlBff);
+        users.push(object);
+        console.log(users);
+        loginPage();
+        uName.value = '';
+        uPwd.value = '';
+        userPhoto.setAttribute('src', users[0].photoUrl);
+        userTag.innerText = users[0].usrName;
+        tstText.innerText = 'You have successfully Signed Up.'
+        toast();
+    }
+    else
+    {
+        tstText.innerHTML = '<p class="text-danger mb-0"><i class="fa-solid fa-circle-exclamation"></i>&nbsp;Password do not match.</p>'
+        toast();
+        uPwd.classList.add('is-invalid');
+        uconfPwd.classList.add('is-invalid');
+    }
 }
 
-const toastTrigger = document.getElementById('signUp')
 const toastLiveExample = document.getElementById('liveToast')
 
-if (toastTrigger) {
-  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-  toastTrigger.addEventListener('click', () => {
-    toastBootstrap.show()
-  })
+function toast(arg)
+{
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    toastBootstrap.show();
 }
 
 function checkCredentials()
 {
-    console.log(uName.value);
-    if (uName.value in user)
-    {
-        console.log(uName.value);
-    }
-    else
-    {
-        alert("Invalid Username/Password!!!");
-    }
-
+    // Authentication Code here
 }
-
-
-
-
-// class userData{
-//     constructor(uNameD){
-//         this.uNameD = uNameD;
-//     }
-// }
-
-// const users = [];
-
-// const object = new userData('Kanjibhai');
-// users.push(object);
- 
-// for (var i = 0; i < users.length; i++){
-//   console.log(users[i].uNameD);
-// }

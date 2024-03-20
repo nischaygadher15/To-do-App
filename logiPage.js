@@ -118,7 +118,8 @@ function checkCredentials()
     { 
         console.log(userData);
         userData.logStatus[0] = 'Logged in';
-        userData.logStatus[1] = dateObj.toLocaleString();
+        let dateObj1 = new Date();
+        userData.logStatus[1] = dateObj1.toLocaleString();
         localStorage.setItem(userData.usrName, JSON.stringify(userData));
         console.log(localStorage);
         // window.location.href = './to-do.html';

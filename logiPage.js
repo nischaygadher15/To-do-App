@@ -18,14 +18,19 @@ let photoUrlBff;
 let users = [];
 let tstText = document.getElementById('tstText');
 let err = ['Password Do not Match'];
+let dateObj = new Date();
 
 class user
 {
-    constructor(userName, userPwd, photoUrl)
+    constructor(userName, userPwd, photoUrl, status)
     {
         this.usrName = userName;
         this.usrPwd = userPwd;
         this.photoUrl = photoUrl;
+        this.logStatus = [];
+        this.logStatus.push(status);
+        this.logStatus.push(dateObj.toLocaleString());
+        this.logStatus.push(Date.now());
     }
 }
 
@@ -75,8 +80,8 @@ function signUp()
         userPhoto.setAttribute('src', "./Images/user.svg");
         uPwd.classList.remove('is-invalid');
         uconfPwd.classList.remove('is-invalid');
-        const object = new user(uName.value, uPwd.value, photoUrlBff);
-        console.log(object);
+        const object = new user(uName.value, uPwd.value, photoUrlBff, 'Signed Up');
+        // console.log(object);
         localStorage.setItem(`${object.usrName}`, JSON.stringify(object));
         loginPage();
         uName.value = '';
@@ -108,12 +113,15 @@ function toast(arg)
 function checkCredentials()
 {
     // Authentication
-    let userData = JSON.parse(localStorage.getItem(uName.value));
+    var userData = JSON.parse(localStorage.getItem(uName.value));
     if( (userData !== null) && (userData.usrName == uName.value) && (userData.usrPwd == uPwd.value) )
     { 
-        tstText.innerHTML = '<p class="" mb-0"><i class="bi bi-check-circle-fill"></i>&nbsp;Welcom to To Do App, Successfully logged in.</p>';
-        toast();
-        window.location.href = './to-do.html';
+        console.log(userData);
+        userData.logStatus[0] = 'Logged in';
+        userData.logStatus[1] = dateObj.toLocaleString();
+        localStorage.setItem(userData.usrName, JSON.stringify(userData));
+        console.log(localStorage);
+        // window.location.href = './to-do.html';
         // location.replace('./to-do.html');
     }
     else
@@ -123,5 +131,4 @@ function checkCredentials()
         toast();
     }
 }
-
 

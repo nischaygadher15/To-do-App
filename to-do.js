@@ -14,6 +14,23 @@ var taskStatus = {};
 
 addTaskBtn.addEventListener("click",addTask);
 
+window.addEventListener('load', () => 
+{
+    const preloader = document.getElementById('preloader');
+    preloader.classList.add('hide-preloader');
+    preloader.addEventListener('transitionend', () => 
+    {
+        // document.body.removeChild('preloader');
+        preloader.display = 'none';
+    })
+
+    const toastLiveExample = document.getElementById('liveToast')
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    tstText.innerHTML = '<p class="text-success" mb-0"><i class="bi bi-check-circle-fill"></i>&nbsp;Welcom to To Do App, Successfully logged in.</p>';
+    toastBootstrap.show();
+})
+
+
 function addTask()
 {  
     if(taskName.value !== '')
@@ -33,7 +50,7 @@ function addTask()
         }
 
         taskBlk.innerHTML += `
-            <div class="mb-3 g-2 d-flex justify-content-center" id="ts-${tsId}">
+            <div class="mb-3 g-2 px-1 d-flex justify-content-center" id="ts-${tsId}">
                 <div class="col-8 me-3">
                     <div class="taskNameBlk d-flex">
                         <input class="form-check-input fs-4 me-3 taskChk" type="checkbox" aria-label="Checkbox" id="ts-chk-${tsId}" onclick="tskChk('ts-chk-${tsId}','ts-tk-${tsId}')">

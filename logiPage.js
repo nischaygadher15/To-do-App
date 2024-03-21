@@ -52,6 +52,25 @@ picUpload.addEventListener('change' , () => {
     })
 })
 
+function loader()
+{
+    preloader();
+    loadData();
+}
+
+function preloader()
+{
+    const preloader = document.getElementById('preloader');
+    preloader.classList.add('show-preloader');
+    preloader.addEventListener('transitionend', () => 
+    {
+        // document.body.removeChild('preloader');
+        preloader.classList.remove('show-preloader');
+        preloader.display = 'none';
+    })
+    return true;
+}
+
 
 function loadData()
 {
@@ -79,14 +98,22 @@ function clearUserData()
 
 function signUpPage()
 {
-    clearUserData();
-    picUpload.style.display = 'block';
-    uConfPwdBlk.style.display = 'block';
-    loginBtn.style.display = 'none';
-    signUp1.style.display = 'block';
-    helpPara.style.display = 'none';
-    creatAccount1.style.display = 'none';
-    creatAccount2.style.display = 'block';
+    const preloader = document.getElementById('preloader');
+    preloader.classList.add('show-preloader');
+    preloader.addEventListener('transitionend', () => 
+    {
+        // document.body.removeChild('preloader');
+        preloader.classList.remove('show-preloader');
+        preloader.display = 'none';
+        clearUserData();
+        picUpload.style.display = 'block';
+        uConfPwdBlk.style.display = 'block';
+        loginBtn.style.display = 'none';
+        signUp1.style.display = 'block';
+        helpPara.style.display = 'none';
+        creatAccount1.style.display = 'none';
+        creatAccount2.style.display = 'block';
+    })
 }
 
 
@@ -125,7 +152,7 @@ function signUp()
             uPwd.value = '';
             uconfPwd.value = '';
             loginPage();
-            tstText.innerText = ''
+            
             tstText.innerHTML = '<p class="text-success mb-0"><i class="fa-solid fa-circle-exclamation"></i>&nbsp;You have successfully Signed Up..</p>'
             toast();
         }

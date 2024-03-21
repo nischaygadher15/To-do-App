@@ -15,7 +15,7 @@ let signUp1 = document.getElementById('signUp');
 let picUpload = document.getElementById('picUpload');
 let userPhoto = document.getElementById('userPhoto');
 let photoUrlBff;
-let users = [];
+var users = [];
 let tstText = document.getElementById('tstText');
 let err = ['Password Do not Match'];
 let dateObj = new Date();
@@ -39,19 +39,47 @@ signUpBtn.addEventListener('click', signUpPage);
 loginLink.addEventListener('click', loginPage);
 loginBtn.addEventListener('click', checkCredentials);
 signUp1.addEventListener('click', signUp);
-
+var imgFlag;
 picUpload.addEventListener('change' , () => {
     const fr = new FileReader();
+    console.log('yes it is triggered.')
     fr.readAsDataURL(picUpload.files[0]);
 
     fr.addEventListener('load', () => {
         photoUrlBff = fr.result; 
+        // console.log(photoUrlBff);
+        userPhoto.setAttribute('src', photoUrlBff); 
     })
 })
 
 
+function loadData()
+{
+    let temp = JSON.parse(localStorage.getItem('ToDoData'));
+    if ( temp !== null)
+    {
+        
+        users = temp;
+        console.log(users);
+    }
+}
+
+function setDATA()
+{
+    localStorage.setItem(`ToDoData`, JSON.stringify(users));
+}
+
+function clearUserData()
+{
+    uName.value = '';
+    uPwd.value = '';
+    uconfPwd.value = '';
+    userPhoto.setAttribute('src', "./Images/user.svg");
+} 
+
 function signUpPage()
 {
+    clearUserData();
     picUpload.style.display = 'block';
     uConfPwdBlk.style.display = 'block';
     loginBtn.style.display = 'none';
@@ -61,9 +89,18 @@ function signUpPage()
     creatAccount2.style.display = 'block';
 }
 
+
 function loginPage()
 {
-    // userPhoto.setAttribute('src', "./Images/user.svg");
+    // if(uName.value == '')
+    // {
+    //     userPhoto.setAttribute('src', "./Images/user.svg");
+    // }
+    // else
+    // {
+
+    // }
+    clearUserData();
     picUpload.style.display = 'none';
     uConfPwdBlk.style.display = 'none';
     loginBtn.style.display = 'block';
@@ -77,20 +114,26 @@ function signUp()
 {
     if(uPwd.value == uconfPwd.value)
     {
-        userPhoto.setAttribute('src', "./Images/user.svg");
-        uPwd.classList.remove('is-invalid');
-        uconfPwd.classList.remove('is-invalid');
-        const object = new user(uName.value, uPwd.value, photoUrlBff, 'Signed Up');
-        // console.log(object);
-        localStorage.setItem(`${object.usrName}`, JSON.stringify(object));
-        loginPage();
-        uName.value = '';
-        uPwd.value = '';
-        uconfPwd.value = '';
-        // userPhoto.setAttribute('src', object.photoUrl);
-        // userTag.innerText = object.usrName;
-        tstText.innerText = 'You have successfully Signed Up.'
-        toast();
+        if(usrAlreadyExist())
+        {
+            uPwd.classList.remove('is-invalid');
+            uconfPwd.classList.remove('is-invalid');
+            const object = new user(uName.value, uPwd.value, photoUrlBff, 'Signed Up');
+            users.push(object);
+            setDATA();
+            uName.value = '';
+            uPwd.value = '';
+            uconfPwd.value = '';
+            loginPage();
+            tstText.innerText = ''
+            tstText.innerHTML = '<p class="text-success mb-0"><i class="fa-solid fa-circle-exclamation"></i>&nbsp;You have successfully Signed Up..</p>'
+            toast();
+        }
+        else
+        {
+            tstText.innerHTML = '<p class="text-danger mb-0"><i class="fa-solid fa-circle-exclamation"></i>&nbsp;User is already exist, please try different user name.</p>'
+            toast();
+        }
     }
     else
     {
@@ -101,6 +144,22 @@ function signUp()
     }
 }
 
+function usrAlreadyExist()
+{
+    loadData();
+    let userFlag = users.every((usr) =>
+        {
+            console
+            if(usr.usrName == uName.value) 
+            {
+                console.log(usr.usrName);
+                console.log(uName.value);
+                return false
+            }
+            return true;
+        });
+    return userFlag? true : false
+}
 
 const toastLiveExample = document.getElementById('liveToast')
 
@@ -113,23 +172,32 @@ function toast(arg)
 function checkCredentials()
 {
     // Authentication
-    var userData = JSON.parse(localStorage.getItem(uName.value));
-    if( (userData !== null) && (userData.usrName == uName.value) && (userData.usrPwd == uPwd.value) )
-    { 
-        console.log(userData);
-        userData.logStatus[0] = 'Logged in';
-        let dateObj1 = new Date();
-        userData.logStatus[1] = dateObj1.toLocaleString();
-        localStorage.setItem(userData.usrName, JSON.stringify(userData));
-        console.log(localStorage);
-        // window.location.href = './to-do.html';
-        // location.replace('./to-do.html');
-    }
-    else
-    {
-        tstText.innerText = `Invalid User/Password!!!.`;
-        tstText.innerHTML = '<p class="text-danger mb-0"><i class="fa-solid fa-circle-exclamation"></i>&nbsp;Invalid User/Password</p>'
-        toast();
-    }
+
+    loadData();
+    users.every((usr) => {
+        if(usr.usrName == uName.value)
+        {
+            if((usr.usrPwd == uPwd.value))
+            {
+                usr.logStatus[0] = 'Logged in';
+                let dateObj1 = new Date();
+                usr.logStatus[1] = dateObj1.toLocaleString();
+                setDATA();
+                window.location.href = './to-do.html';
+                return false;
+            }
+            else
+            {
+              return false;  
+            }
+        }
+        return true;
+    })
+
+    tstText.innerText = `Invalid User/Password!!!.`;
+    tstText.innerHTML = '<p class="text-danger mb-0"><i class="fa-solid fa-circle-exclamation"></i>&nbsp;Invalid User/Password</p>'
+    toast();
+
 }
+
 

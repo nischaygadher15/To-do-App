@@ -10,16 +10,16 @@
     <link rel="stylesheet" href="./loginPage.css">
     <link rel="icon" type="image/x-icon" href="./Images/to-do-icon2.png">
 </head>
-<body>
+<body onload="loadData()">
     <div class="container-fluid">
-        <div class="row nav-bar justify-content-around align-items-center">
+        <div class="row nav-bar justify-content-between align-items-center">
             <div class="col-2">
                 <div class="logo d-flex justify-content-center align-items-center">
                     <img src="./Images/to-do-icon2.png" alt="to-do-logo" id="to-do-logo">
                     <p class="logoText mb-0 fs-3 ms-2 text-white">To Do</p>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-7">
                 <ul class="nav-list text-white mb-0 d-flex justify-content-evenly">
                     <li><a href="#" class="nav-link">Home</a></li>
                     <li><a href="#" class="nav-link">Products</a></li>
@@ -65,7 +65,7 @@
             </div>
             <div class="col-4">
                 <div class="loginForm">
-                    <div class="mb-4" id="userProfile">
+                    <div class="mb-3" id="userProfile">
                         <div class="d-flex justify-content-evenly align-items-center mb-3" id="user">
                             <img src="./Images/user.svg" alt="User Photo" id="userPhoto">
                             <input type="file" class="form-control w-50 mt-3" id="picUpload">
@@ -87,7 +87,7 @@
                                 <input type="password" name="cPwd" id="uconfPwd" class="form-control mt-3" placeholder="Confirm Password">
                             </div>
                         </div>
-                        <div class="lBtn mb-4">
+                        <div class="lBtn mb-3">
                             <button class="btn w-100 text-white" id="loginBtn">Login</button>
                             <button class="btn w-100 text-white" id="signUp">Sign Up</button>
                         </div>

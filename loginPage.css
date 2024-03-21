@@ -39,7 +39,8 @@ body
 #userPhoto
 {
     width: 135px;
-    height: 130px;
+    height: 140px;
+    object-fit:fill;
     background-color: white;
     border-radius: 50%;
 }

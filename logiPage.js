@@ -14,12 +14,14 @@ let uconfPwd = document.getElementById('uconfPwd');
 let signUp1 = document.getElementById('signUp');
 let picUpload = document.getElementById('picUpload');
 let userPhoto = document.getElementById('userPhoto');
-let photoUrlBff;
+let photoUrlBff = picUpload.value;
 var users = [];
 let tstText = document.getElementById('tstText');
 let err = ['Password Do not Match'];
 let dateObj = new Date();
-
+let pageFlag =  true;
+var userNameData = [];
+var userPhotos = [];
 class user
 {
     constructor(userName, userPwd, photoUrl, status)
@@ -39,10 +41,9 @@ signUpBtn.addEventListener('click', signUpPage);
 loginLink.addEventListener('click', loginPage);
 loginBtn.addEventListener('click', checkCredentials);
 signUp1.addEventListener('click', signUp);
-var imgFlag;
 picUpload.addEventListener('change' , () => {
     const fr = new FileReader();
-    console.log('yes it is triggered.')
+    // console.log('yes it is triggered.')
     fr.readAsDataURL(picUpload.files[0]);
 
     fr.addEventListener('load', () => {
@@ -77,10 +78,15 @@ function loadData()
     let temp = JSON.parse(localStorage.getItem('ToDoData'));
     if ( temp !== null)
     {
-        
         users = temp;
         console.log(users);
     }
+    
+    users.forEach((usr) =>
+    {
+        userNameData.push(usr.usrName);
+        userPhotos.push(usr.photoUrl);
+    })
 }
 
 function setDATA()
@@ -119,14 +125,7 @@ function signUpPage()
 
 function loginPage()
 {
-    // if(uName.value == '')
-    // {
-    //     userPhoto.setAttribute('src', "./Images/user.svg");
-    // }
-    // else
-    // {
-
-    // }
+    pageFlag =  true;
     clearUserData();
     picUpload.style.display = 'none';
     uConfPwdBlk.style.display = 'none';
@@ -139,12 +138,25 @@ function loginPage()
 
 function signUp()
 {
+    pageFlag =  false;
     if(uPwd.value == uconfPwd.value)
     {
         if(usrAlreadyExist())
         {
             uPwd.classList.remove('is-invalid');
             uconfPwd.classList.remove('is-invalid');
+            console.log(picUpload.files[0]);
+            // if(picUpload.files[0] == '')
+            // {   
+            //     const fr1 = new FileReader();
+            //     fr1.readAsDataURL();
+
+            //     fr1.addEventListener('load', () => {
+            //         photoUrlBff = fr.result; 
+            //         // console.log(photoUrlBff);
+            //         userPhoto.setAttribute('src', photoUrlBff); 
+            //     })
+            // }
             const object = new user(uName.value, uPwd.value, photoUrlBff, 'Signed Up');
             users.push(object);
             setDATA();
@@ -176,17 +188,46 @@ function usrAlreadyExist()
     loadData();
     let userFlag = users.every((usr) =>
         {
-            console
             if(usr.usrName == uName.value) 
             {
-                console.log(usr.usrName);
-                console.log(uName.value);
+                // console.log(usr.usrName);
+                // console.log(uName.value);
                 return false
             }
             return true;
         });
     return userFlag? true : false
 }
+
+let udPhotoFlag = true;
+function updatePhoto(pageFlag)
+{
+    if(udPhotoFlag == true)
+    {
+        loadData();
+        udPhotoFlag = false;
+    }
+
+    console.log("updatePhoto is running");
+    if(uName.value !== '')
+    {
+        if(userNameData.includes(uName.value))
+        {
+            console.log('user found!!');
+            userPhoto.setAttribute('src', usr.photoUrl);
+        }
+        console.log('user found!!');
+        userPhoto.setAttribute('src', usr.photoUrl);
+        onsole.log('user not found!!');
+    }
+    else
+    {
+        console.log('empty')
+    }
+    // setTimeout(updatePhoto, 500);
+}
+
+updatePhoto();
 
 const toastLiveExample = document.getElementById('liveToast')
 

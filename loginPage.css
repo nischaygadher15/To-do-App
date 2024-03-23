@@ -1,0 +1,196 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body
+{
+    background-color: #6165FF;
+}
+
+#preloader
+{
+    width: 100vw;
+    height: 100vh;
+    background-color: #45474b;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 1.2s, visibility 1.2s;
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.textBlk
+{
+    margin-top: -50px; 
+}
+
+.loaderLogo
+{
+    width: 50px;
+    height: 50px;
+}
+
+.spinner
+{
+    width: 75px;
+    height: 75px;
+    border: 12px solid  #ffffff;
+    border-top-color: #6165FF;
+    border-radius: 50%;
+    animation: spin 1.2s infinite linear;
+}
+
+
+.show-preloader
+{
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+@keyframes spin
+{
+    100%
+    {
+        transform: rotate(360deg);
+    }
+}
+
+
+.nav-bar
+{
+    height: 10vh !important;
+    background-color: rgba(51,51,51) !important;
+}
+
+#to-do-logo
+{
+    width: 48px;
+}
+
+.main-row, .loginForm, .h-100
+{
+    height: 75vh !important;
+}
+
+.nav-list li
+{
+    display: inline-block;
+}
+
+.nav-link:hover
+{
+    color: #6165FF;
+}
+
+#userPhoto
+{
+    width: 135px;
+    height: 140px;
+    object-fit:fill;
+    background-color: white;
+    border-radius: 50%;
+}
+
+#picUpload
+{
+    display: none;
+}
+
+#uName, #uPwd, #uconfPwd
+{
+    border-radius: 2rem;
+    padding: 0.8rem 3.5rem;
+    border: none;
+}
+
+.uNameBlk, .uPwdBlk, #uConfPwdBlk
+{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#uConfPwdBlk
+{
+    display: none;
+}
+
+.userIcon, .pwdIcon, .cPwdIcon
+{
+    position: absolute;
+    top: 1rem;
+    left: 1.5rem;
+    font-size: 20px;
+}
+
+#loginBtn, #signUp
+{
+    border-radius: 2rem !important; 
+    padding: 0.8rem 0;
+    font-weight: bold;
+    background-color: rgba(51,51,51, 1);
+}
+
+#loginBtn
+{
+    display: block;
+}
+
+#signUp
+{
+    display: none;
+}
+
+#loginBtn:hover
+{
+    background-color: rgba(51,51,51, 0.9);
+}
+
+.forgotUname, .creatAcLink, .forgotPwd
+{
+    color: white;
+    text-decoration: none;
+}
+
+.forgotUname:hover , .creatAcLink:hover, .forgotPwd:hover
+{
+    color: black;
+}
+
+#signUpBtn, #loginLink
+{
+    background-color: transparent !important;
+    color: White !important;
+}
+
+#signUpBtn:hover, #loginLink:hover
+{
+    color: black !important;
+}
+
+#creatAccount2
+{
+    display: none;
+}
+
+#helpPara, .userHelp
+{
+    margin-bottom: 0.5rem !important;
+}
+
+.footer-row
+{
+    height: 7vh !important;
+}
+
+.nkg-logo
+{
+    width: 6rem;
+    height: 2rem;
+}

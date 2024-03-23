@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do-App</title>
+    <link rel="icon" type="image/x-icon" href="./Images/to-do-icon2.png">
+    <link rel="stylesheet" href="to-do.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="toast-container to  p-0 end-0 p-3 mt-5">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+            <img src="./Images/to-do-icon2.png" class="rounded me-2" alt="..." style="width: 1rem;">
+            <strong class="me-auto">To Do</strong>
+            <!-- <small>11 mins ago</small> -->
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="tstText">
+                You have successfully Logged In.
+            </div>
+        </div>
+    </div>
+    <div class="d-flex flex-column justify-content-center align-items-center" id="preloader">
+        <div class="textBlk text-white fs-3 d-flex align-items-center mb-4">
+                <img src="./Images/to-do-icon2.png" alt="Loader Logo" class="loaderLogo">
+                <p class="mb-0 ms-2">To-Do-App</p>
+        </div>
+        <div class="spinner"></div>
+    </div>
+    <div class="container-fluid">
+        <div class="row nav-bar justify-content-around align-items-center">
+            <div class="col-2">
+                <div class="logo d-flex justify-content-center align-items-center">
+                    <img src="./Images/to-do-icon2.png" alt="to-do-logo" id="to-do-logo">
+                    <p class="logoText mb-0 fs-3 ms-2 text-white">To Do</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <ul class="nav-list text-white mb-0 d-flex justify-content-evenly">
+                    <li><a href="#" class="nav-link">Home</a></li>
+                    <li><a href="#" class="nav-link">Products</a></li>
+                    <li><a href="#" class="nav-link">Services</a></li>
+                    <li><a href="#" class="nav-link">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="col-2 d-flex justify-content-center">
+                <div class="userPopdown">
+                    <div class="dropdown">
+                        <button class="btn btn-lg dropdown-toggle text-white" id="userdpBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <!-- User Name -->
+                          <img src="./Images/UserPhotos/user1.jpg" alt="User Photo" id="userdpPic">
+                          Kanjikaka
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><button type="button" class="btn w-100 text-start px-3 py-1" id="setting"><i class="fa-solid fa-chart-line"></i>My Progress</button></li>
+                          <li><button type="button" class="btn w-100 text-start px-3 py-1" id="setting"><i class="fa-solid fa-gear"></i>Settings</button></li>
+                          <li><button type="button" class="btn w-100 text-start px-3 py-1" id="logOutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i>Log out</button></li>
+                        </ul>
+                      </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center main-row">
+            <div class="col-5">
+                <div class="todoApp border border-primary  d-flex flex-column justify-content-evenly">
+                    <h1 class="title text-center mb-0 fs-2">Todo App</h1>
+                    <div class="d-flex justify-content-center g-2 top-row mb-3">
+                        <div class="col-9 me-2">
+                            <div class="addTaskInp">
+                                <input type="text" name="taskName" id="taskName" class="form-control fs-4 py-1" placeholder="Enter Task Name">
+                                <p class="text-start text-danger mb-0 mt-1" id="alertMsg">Please Enter Task name</p>
+                            </div>
+                        </div>
+                        <div class="taskBtnBlk">
+                            <button type="button" class="btn addTaskBtn text-white">
+                                <i class="bi bi-plus-lg fs-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="taskListBlk" class="overflow-auto overflow-x-hidden py-2">
+                        <!-- Task List Code Here -->
+                        <!-- <div class="mb-3 g-2 d-flex justify-content-center" id="ts-${tsId}">
+                            <div class="col-8 me-3">
+                                <div class="taskNameBlk d-flex">
+                                    <input class="form-check-input fs-4 me-3 taskChk" type="checkbox" aria-label="Checkbox" id="ts-chk-${tsId}">
+                                    <input type="text" name="task" value="Task" class="task form-control fs-4" id="ts-tk-${tsId}" disabled>
+                                </div> 
+                            </div>
+                            <div class="tasksBtnBlk"> 
+                                <button type="button" class="btn editBtn text-white me-2" id="ts-eBtn-${tsId}" onclick="editTask('ts-tkw-${tsId}','ts-tk-${tsId}','ts-eBtn-${tsId}')">
+                                    <i class="fas fa-edit fs-6"></i>
+                                </button>
+                                <button type="button" class="btn delBtn text-white" onclick="deleteTask('ts-${tsId}')">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./to-do.js"></script>
+</body>
+</html>
+
+
+

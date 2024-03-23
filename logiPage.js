@@ -127,7 +127,6 @@ function loginPage()
         // document.body.removeChild('preloader');
         preloader.classList.remove('show-preloader');
         preloader.display = 'none';
-        clearUserData();
         pageFlag =  true;
         clearUserData();
         picUpload.style.display = 'none';
@@ -204,31 +203,39 @@ function nameData()
 
 
 let udPhotoFlag = true;
-function updatePhoto(pageFlag)
+function updatePhoto()
 {
-    if(udPhotoFlag == true)
+    if(pageFlag)
     {
-        loadData();
-        nameData();
-        udPhotoFlag = false;
-    }
-
-    if(uName.value !== '')
-    {
-        if(uName.value in userNameData)
+        if(udPhotoFlag == true)
         {
-            console.log('updatePhoto is running : user found!!');
-            userPhoto.setAttribute('src', userNameData[uName.value]);
+            loadData();
+            nameData();
+            udPhotoFlag = false;
+        }
+    
+        if(uName.value !== '')
+        {
+            if(uName.value in userNameData)
+            {
+                console.log('updatePhoto is running : user found!!');
+                userPhoto.setAttribute('src', userNameData[uName.value]);
+            }
+            else
+            {
+                console.log('updatePhoto is running : user not found!!');
+                userPhoto.setAttribute('src', './Images/user.svg');
+            }
         }
         else
         {
-            console.log('updatePhoto is running : user not found!!');
+            console.log('updatePhoto is running : empty')
             userPhoto.setAttribute('src', './Images/user.svg');
         }
     }
     else
     {
-        console.log('updatePhoto is running : empty')
+        console.log('We are on Sign Up Page.');
     }
     setTimeout(updatePhoto, 500);
 }

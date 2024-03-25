@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body>
+<body onload="loader()">
     <div class="toast-container to  p-0 end-0 p-3 mt-5">
         <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
@@ -41,7 +41,7 @@
             </div>
             <div class="col-6">
                 <ul class="nav-list text-white mb-0 d-flex justify-content-evenly">
-                    <li><a href="#" class="nav-link">Home</a></li>
+                    <li><a href="./to-do-loginPage.html" class="nav-link">Home</a></li>
                     <li><a href="#" class="nav-link">Products</a></li>
                     <li><a href="#" class="nav-link">Services</a></li>
                     <li><a href="#" class="nav-link">Contact Us</a></li>
@@ -52,8 +52,8 @@
                     <div class="dropdown">
                         <button class="btn btn-lg dropdown-toggle text-white" id="userdpBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                           <!-- User Name -->
-                          <img src="./Images/UserPhotos/user1.jpg" alt="User Photo" id="userdpPic">
-                          Kanjikaka
+                          <img src="./Images/user.svg" alt="User Photo" id="userdpPic">
+                          <span id="uNameTag">User Name</span>
                         </button>
                         <ul class="dropdown-menu">
                           <li><button type="button" class="btn w-100 text-start px-3 py-1" id="setting"><i class="fa-solid fa-chart-line"></i>My Progress</button></li>

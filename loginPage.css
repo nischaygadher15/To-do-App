@@ -90,8 +90,8 @@ body
 
 #userPhoto
 {
-    width: 135px;
-    height: 140px;
+    width: 125px;
+    height: 130px;
     object-fit:fill;
     background-color: white;
     border-radius: 50%;
@@ -167,6 +167,8 @@ body
 {
     background-color: transparent !important;
     color: White !important;
+    outline: none !important;
+    border: none !important;
 }
 
 #signUpBtn:hover, #loginLink:hover

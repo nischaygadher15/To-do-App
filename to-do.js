@@ -11,24 +11,94 @@ var tsIdArr = [];
 var tsId = 0;
 var editFlags = {};
 var taskStatus = {};
+var users = [];
+var activeUser = {};
+let logOutBtn = document.getElementById('logOutBtn');
+let userdpPic = document.getElementById('userdpPic');
+let uNameTag = document.getElementById('uNameTag'); 
 
+
+// import {loadData, setData} from "./logiPage.js"
+// loadData();
+
+logOutBtn.addEventListener('click', logOut);
 addTaskBtn.addEventListener("click",addTask);
 
-window.addEventListener('load', () => 
+function loader()
+{
+    preloader();
+    loadData();
+    whoIsActive();
+    setTimeout(successfull, 1200);
+}
+
+function preloader()
 {
     const preloader = document.getElementById('preloader');
-    preloader.classList.add('hide-preloader');
+    preloader.classList.add('show-preloader');
     preloader.addEventListener('transitionend', () => 
     {
         // document.body.removeChild('preloader');
+        preloader.classList.remove('show-preloader');
         preloader.display = 'none';
     })
+    return true;
+}
 
+
+function loadData()
+{
+    let temp = JSON.parse(localStorage.getItem('ToDoData'));
+    if ( temp !== null)
+    {
+        users = temp;
+        console.log(users);
+    }
+}
+
+function setData()
+{
+    localStorage.setItem(`ToDoData`, JSON.stringify(users));
+}
+
+function whoIsActive()
+{
+    users.every((usr) =>
+    {
+        if(usr.logStatus[0] == 'Logged in')
+        {
+            activeUser = usr;
+            console.log(`Active : ${activeUser.usrName}`);
+        }
+    })
+
+    userdpPic.setAttribute('src', activeUser.photoUrl);
+    uNameTag.innerText = activeUser.usrName;
+}
+
+function logOut()
+{
+    users.every((usr) =>
+    {
+        if(usr.usrName == activeUser.usrName)
+        {
+            usr.logStatus[0] = 'Logged out';
+            let dateObj2 = new Date();
+            usr.logStatus[1] = dateObj2.toLocaleString();
+            console.log(`Logged out : ${activeUser.usrName}`);
+        }
+    })
+    setData();
+    window.location.href = './to-do-loginPage.html';
+}
+
+function successfull()
+{
     const toastLiveExample = document.getElementById('liveToast')
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
     tstText.innerHTML = '<p class="text-success" mb-0"><i class="bi bi-check-circle-fill"></i>&nbsp;Welcom to To Do App, Successfully logged in.</p>';
     toastBootstrap.show();
-})
+}
 
 
 function addTask()

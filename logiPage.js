@@ -35,6 +35,7 @@ class user
         this.logStatus.push(status);
         this.logStatus.push(dateObj.toLocaleString());
         this.logStatus.push(Date.now());
+        this.taskList = [];
     }
 }
 

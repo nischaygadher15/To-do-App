@@ -58,6 +58,15 @@ function loadData()
 
 function setData()
 {
+    users.every((usr) => 
+    {
+        if(activeUser.usrName == usr.usrName)
+        {
+            usr = activeUser;
+            return false;
+        }
+        return true;
+    })
     localStorage.setItem(`ToDoData`, JSON.stringify(users));
 }
 
@@ -69,11 +78,22 @@ function whoIsActive()
         {
             activeUser = usr;
             console.log(`Active : ${activeUser.usrName}`);
+            return false;
         }
+        return true;
     })
 
     userdpPic.setAttribute('src', activeUser.photoUrl);
     uNameTag.innerText = activeUser.usrName;
+    
+    activeUser.taskList.every((taskVar) =>
+    {
+        for(let o in taskVar)
+        {
+            addTaskRow( o,  taskVar[o][3]); 
+        }
+        
+    })
 }
 
 function logOut()
@@ -86,7 +106,9 @@ function logOut()
             let dateObj2 = new Date();
             usr.logStatus[1] = dateObj2.toLocaleString();
             console.log(`Logged out : ${activeUser.usrName}`);
+            return false;
         }
+        return true;
     })
     setData();
     window.location.href = './to-do-loginPage.html';
@@ -118,33 +140,18 @@ function addTask()
             }
             j++;
         }
-
-        taskBlk.innerHTML += `
-            <div class="mb-3 g-2 px-1 d-flex justify-content-center" id="ts-${tsId}">
-                <div class="col-8 me-3">
-                    <div class="taskNameBlk d-flex">
-                        <input class="form-check-input fs-4 me-3 taskChk" type="checkbox" aria-label="Checkbox" id="ts-chk-${tsId}" onclick="tskChk('ts-chk-${tsId}','ts-tk-${tsId}')">
-                        <div id="ts-tkw-${tsId}" class="rounded">
-                            <input type="text" name="task" value="${taskName.value}" class="task form-control fs-4" id="ts-tk-${tsId}" disabled>
-                        </div>
-                    </div> 
-                </div>
-                <div class="tasksBtnBlk"> 
-                    <button type="button" class="btn editBtn text-white me-2" id="ts-eBtn-${tsId}" onclick="editTask('ts-tkw-${tsId}','ts-chk-${tsId}','ts-tk-${tsId}','ts-eBtn-${tsId}')">
-                        <i class="fas fa-edit fs-6"></i>
-                    </button>
-                    <button type="button" class="btn delBtn text-white" onclick="deleteTask('ts-${tsId}')">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </div>
-            </div>
-            `; 
-        
+        addTaskRow(tsId, taskName.value);
         tsIdArr.push(tsId);
         tsIdArr.sort();
         editFlags[`ts-eBtn-${tsId}`] = false;
         taskStatus[`ts-chk-${tsId}`] = false;
-        tsId++;    
+        let tempObj = {};
+        let tempTaskVar = document.getElementById(`ts-tk-${tsId}`);
+        tempObj[`ts-${tsId}`]  = [`ts-chk-${tsId}`, editFlags[`ts-eBtn-${tsId}`],`ts-tk-${tsId}`, tempTaskVar.value];
+        activeUser.taskList.push(tempObj);
+        console.log(activeUser);
+        setData();
+        tsId++; 
     }
     else
     {
@@ -152,6 +159,31 @@ function addTask()
         taskName.classList.add('is-invalid');
         document.getElementById('alertMsg').style.display = 'block';
     }
+}
+
+function addTaskRow(arg1, arg2)
+{
+
+    taskBlk.innerHTML += `
+            <div class="mb-3 g-2 px-1 d-flex justify-content-center" id="ts-${arg1}">
+                <div class="col-8 me-3">
+                    <div class="taskNameBlk d-flex">
+                        <input class="form-check-input fs-4 me-3 taskChk" type="checkbox" aria-label="Checkbox" id="ts-chk-${arg1}" onclick="tskChk('ts-chk-${arg1}','ts-tk-${arg1}')">
+                        <div id="ts-tkw-${arg1}" class="rounded">
+                            <input type="text" name="task" value="${arg2}" class="task form-control fs-4" id="ts-tk-${arg1}" disabled>
+                        </div>
+                    </div> 
+                </div>
+                <div class="tasksBtnBlk"> 
+                    <button type="button" class="btn editBtn text-white me-2" id="ts-eBtn-${arg1}" onclick="editTask('ts-tkw-${arg1}','ts-chk-${arg1}','ts-tk-${arg1}','ts-eBtn-${arg1}')">
+                        <i class="fas fa-edit fs-6"></i>
+                    </button>
+                    <button type="button" class="btn delBtn text-white" onclick="deleteTask('ts-${arg1}')">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            `;
 }
 
 function tskChk(chkId1, tkId1)
@@ -202,7 +234,7 @@ function editTask(tkwId,chkId2,tkId,eId)
 
 function deleteTask(delId)
 {
-    console.log(`before: ${tsIdArr}`);
+    // console.log(`before: ${tsIdArr}`);
     document.getElementById(`${delId}`).remove();
     let extId = '';
     for(let s of delId)
@@ -213,6 +245,9 @@ function deleteTask(delId)
             extId += s;
     }
     tsIdArr.splice((tsIdArr.indexOf(parseInt(extId))),1);
-    console.log(`after : ${tsIdArr}`);
+    // console.log(`after : ${tsIdArr}`);
+    activeUser.taskList.splice(delId,1); 
+    setData();
+    console.log(activeUser);  
 }
 

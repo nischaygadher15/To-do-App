@@ -148,6 +148,7 @@ function addTask()
             console.log(`activeUser after push :`,activeUser);
             setData();
             tsId++; 
+            taskName.value= '';
         }
         else
         {

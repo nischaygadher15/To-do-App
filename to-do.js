@@ -7,7 +7,6 @@ let editBtn = document.getElementsByClassName('editBtn');
 let addTaskBtn = document.getElementsByClassName('addTaskBtn')[0];
 var taskName = document.getElementById('taskName'); 
 let delBtn = document.getElementsByClassName('delBtn')[0];
-var tsIdArr = [];
 var tsId = 0;
 var editFlags = {};
 var taskStatus = {};
@@ -16,7 +15,7 @@ var activeUser = {};
 let logOutBtn = document.getElementById('logOutBtn');
 let userdpPic = document.getElementById('userdpPic');
 let uNameTag = document.getElementById('uNameTag'); 
-
+let usrTaskList = [];
 
 // import {loadData, setData} from "./logiPage.js"
 // loadData();
@@ -52,7 +51,7 @@ function loadData()
     if ( temp !== null)
     {
         users = temp;
-        console.log(users);
+        console.log(`loaded:`,users);
     }
 }
 
@@ -62,7 +61,8 @@ function setData()
     {
         if(activeUser.usrName == usr.usrName)
         {
-            usr = activeUser;
+            users[users.indexOf(usr)] = activeUser;
+            console.log(users);
             return false;
         }
         return true;
@@ -77,7 +77,7 @@ function whoIsActive()
         if(usr.logStatus[0] == 'Logged in')
         {
             activeUser = usr;
-            console.log(`Active : ${activeUser.usrName}`);
+            // console.log(`Active : ${activeUser.usrName}`);
             return false;
         }
         return true;
@@ -85,15 +85,17 @@ function whoIsActive()
 
     userdpPic.setAttribute('src', activeUser.photoUrl);
     uNameTag.innerText = activeUser.usrName;
-    
-    activeUser.taskList.every((taskVar) =>
+
+    for (let i in activeUser.taskList)
     {
-        for(let o in taskVar)
+        addTaskRow( i, activeUser.taskList[i][3] );
+        if(activeUser.taskList[i][1] == true)
         {
-            addTaskRow( o,  taskVar[o][3]); 
+            addChk(activeUser.taskList[i][0], activeUser.taskList[i][2]);
         }
-        
-    })
+        usrTaskList.push(activeUser.taskList[i][3]);
+    }
+
 }
 
 function logOut()
@@ -105,7 +107,7 @@ function logOut()
             usr.logStatus[0] = 'Logged out';
             let dateObj2 = new Date();
             usr.logStatus[1] = dateObj2.toLocaleString();
-            console.log(`Logged out : ${activeUser.usrName}`);
+            // console.log(`Logged out : ${activeUser.usrName}`);
             return false;
         }
         return true;
@@ -127,31 +129,33 @@ function addTask()
 {  
     if(taskName.value !== '')
     {
-        taskName.classList.remove('is-invalid');
-        taskName.classList.add('is-valid');
-        document.getElementById('alertMsg').style.display = 'none';
-        let j = 0;
-        while(true)
+        loadData();
+        if (!usrTaskList.includes(taskName.value))
         {
-            if(!tsIdArr.includes(j))
-            {
-                tsId = j;
-                break;
-            }
-            j++;
+            taskName.classList.remove('is-invalid');
+            taskName.classList.add('is-valid');
+            document.getElementById('alertMsg').style.display = 'none';
+            document.getElementById('alertMsg').innerText = 'Please Enter Task name';
+            tsId = activeUser.taskList.length;
+            // console.log(`tsId : ${tsId}`);
+            addTaskRow(tsId, taskName.value);
+            // editFlags[`ts-eBtn-${tsId}`] = false;
+            // taskStatus[`ts-chk-${tsId}`] = false;
+            let temp = [];
+            let tempTaskVar = document.getElementById(`ts-tk-${tsId}`);
+            temp = [`ts-chk-${tsId}`, false,`ts-tk-${tsId}`, tempTaskVar.value];
+            activeUser.taskList.push(temp);
+            console.log(`activeUser after push :`,activeUser);
+            setData();
+            tsId++; 
         }
-        addTaskRow(tsId, taskName.value);
-        tsIdArr.push(tsId);
-        tsIdArr.sort();
-        editFlags[`ts-eBtn-${tsId}`] = false;
-        taskStatus[`ts-chk-${tsId}`] = false;
-        let tempObj = {};
-        let tempTaskVar = document.getElementById(`ts-tk-${tsId}`);
-        tempObj[`ts-${tsId}`]  = [`ts-chk-${tsId}`, editFlags[`ts-eBtn-${tsId}`],`ts-tk-${tsId}`, tempTaskVar.value];
-        activeUser.taskList.push(tempObj);
-        console.log(activeUser);
-        setData();
-        tsId++; 
+        else
+        {
+            taskName.classList.remove('is-valid');
+            taskName.classList.add('is-invalid');
+            document.getElementById('alertMsg').style.display = 'block';
+            document.getElementById('alertMsg').innerText = 'Task is already in list!!';
+        }
     }
     else
     {
@@ -161,6 +165,7 @@ function addTask()
     }
 }
 
+
 function addTaskRow(arg1, arg2)
 {
 
@@ -168,7 +173,7 @@ function addTaskRow(arg1, arg2)
             <div class="mb-3 g-2 px-1 d-flex justify-content-center" id="ts-${arg1}">
                 <div class="col-8 me-3">
                     <div class="taskNameBlk d-flex">
-                        <input class="form-check-input fs-4 me-3 taskChk" type="checkbox" aria-label="Checkbox" id="ts-chk-${arg1}" onclick="tskChk('ts-chk-${arg1}','ts-tk-${arg1}')">
+                        <input class="form-check-input fs-4 me-3 taskChk" type="checkbox" aria-label="Checkbox" id="ts-chk-${arg1}" onclick="tskChk('ts-${arg1}','ts-chk-${arg1}','ts-tk-${arg1}')">
                         <div id="ts-tkw-${arg1}" class="rounded">
                             <input type="text" name="task" value="${arg2}" class="task form-control fs-4" id="ts-tk-${arg1}" disabled>
                         </div>
@@ -186,23 +191,40 @@ function addTaskRow(arg1, arg2)
             `;
 }
 
-function tskChk(chkId1, tkId1)
+function tskChk(tsIDCh, chkId1, tkId1)
 {
-    if(taskStatus[chkId1] == false)
+    if(!document.getElementById(chkId1).classList.contains('chk'))
     {
-        document.getElementById(`${chkId1}`).setAttribute('checked','');
-        document.getElementById(`${chkId1}`).classList.add('chk');
-        document.getElementById(`${tkId1}`).classList.add('lineThru');
-        taskStatus[chkId1] = true;
+        addChk(chkId1, tkId1);
+        let extID = parseInt(extractId(tsIDCh));
+        activeUser.taskList[extID][1] = taskStatus[chkId1];
+        setData();
     }
     else
     {
-        document.getElementById(`${chkId1}`).removeAttribute('checked');
-        document.getElementById(`${tkId1}`).classList.remove('lineThru');
-        document.getElementById(`${chkId1}`).classList.remove('chk');
-        taskStatus[chkId1] = false;
+        removeChk(chkId1,tkId1);
+        let extID = parseInt(extractId(tsIDCh));
+        activeUser.taskList[extID][1] = taskStatus[chkId1];
+        setData();
     }
 }
+
+function addChk(chkArg1, chkArg2)
+{
+    document.getElementById(`${chkArg1}`).setAttribute('checked','');
+    document.getElementById(`${chkArg1}`).classList.add('chk');
+    document.getElementById(`${chkArg2}`).classList.add('lineThru');
+    taskStatus[chkArg1] = true;
+}
+
+function removeChk(chkArg3, chkArg4)
+{
+    document.getElementById(`${chkArg3}`).removeAttribute('checked');
+    document.getElementById(`${chkArg4}`).classList.remove('lineThru');
+    document.getElementById(`${chkArg3}`).classList.remove('chk');
+    taskStatus[chkArg3] = false;
+}
+
 
 function editTask(tkwId,chkId2,tkId,eId)
 {
@@ -236,18 +258,21 @@ function deleteTask(delId)
 {
     // console.log(`before: ${tsIdArr}`);
     document.getElementById(`${delId}`).remove();
-    let extId = '';
-    for(let s of delId)
+    let extId = parseInt(extractId(delId));
+    activeUser.taskList.splice(extId,1);
+    console.log('after Deletion : ', activeUser); 
+    setData();
+}
+
+function extractId(id1)
+{
+    let id2 = '';
+    for(let s of id1)
     {
         if(s == 't' || s == 's' || s == "-")
             continue;
         else
-            extId += s;
+            id2 += s;
     }
-    tsIdArr.splice((tsIdArr.indexOf(parseInt(extId))),1);
-    // console.log(`after : ${tsIdArr}`);
-    activeUser.taskList.splice(delId,1); 
-    setData();
-    console.log(activeUser);  
+    return id2;
 }
-

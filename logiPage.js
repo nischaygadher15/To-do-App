@@ -72,8 +72,6 @@ function preloader()
         // document.body.removeChild('preloader');
         preloader.classList.remove('show-preloader');
         preloader.display = 'none';
-        // document.querySelector('div:not(#preloader), div:not(.preld)').style.opacity= 0;
-        // document.querySelector('div:not(#preloader), div:not(.preld)').style.opacity= 1;
     })
     return true;
 }

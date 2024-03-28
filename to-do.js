@@ -16,7 +16,7 @@ let logOutBtn = document.getElementById('logOutBtn');
 let userdpPic = document.getElementById('userdpPic');
 let uNameTag = document.getElementById('uNameTag'); 
 let usrTaskList = [];
-
+let successFlag = true;
 // import {loadData, setData} from "./logiPage.js"
 // loadData();
 
@@ -28,7 +28,11 @@ function loader()
     preloader();
     loadData();
     whoIsActive();
-    setTimeout(successfull, 1200);
+    if (successFlag == true)
+    {
+        setTimeout(successfull, 1200);
+        successFlag = false;
+    }
 }
 
 function preloader()
@@ -70,6 +74,16 @@ function setData()
     localStorage.setItem(`ToDoData`, JSON.stringify(users));
 }
 
+function initAddTask()
+{
+    for (let i in activeUser.taskList)
+    {
+        activeUser.taskList[i][0] = `ts-chk-${i}`;
+        activeUser.taskList[i][2] = `ts-tk-${i}`;
+        setData();
+    }
+}
+
 function whoIsActive()
 {
     users.every((usr) =>
@@ -83,20 +97,23 @@ function whoIsActive()
         return true;
     })
 
-    userdpPic.setAttribute('src', activeUser.photoUrl);
-    uNameTag.innerText = activeUser.usrName;
-
     for (let i in activeUser.taskList)
     {
         addTaskRow( i, activeUser.taskList[i][3] );
+        activeUser.taskList[i][0] = `ts-chk-${i}`;
+        activeUser.taskList[i][2] = `ts-tk-${i}`;
+        setData();
         if(activeUser.taskList[i][1] == true)
         {
             addChk(activeUser.taskList[i][0], activeUser.taskList[i][2]);
         }
         usrTaskList.push(activeUser.taskList[i][3]);
     }
-
+    userdpPic.setAttribute('src', activeUser.photoUrl);
+    uNameTag.innerText = activeUser.usrName;
+    initAddTask();
 }
+
 
 function logOut()
 {
@@ -148,7 +165,7 @@ function addTask()
             console.log(`activeUser after push :`,activeUser);
             setData();
             tsId++; 
-            taskName.value= '';
+            taskName.value = '';
         }
         else
         {
@@ -176,12 +193,12 @@ function addTaskRow(arg1, arg2)
                     <div class="taskNameBlk d-flex">
                         <input class="form-check-input fs-4 me-3 taskChk" type="checkbox" aria-label="Checkbox" id="ts-chk-${arg1}" onclick="tskChk('ts-${arg1}','ts-chk-${arg1}','ts-tk-${arg1}')">
                         <div id="ts-tkw-${arg1}" class="rounded">
-                            <input type="text" name="task" value="${arg2}" class="task form-control fs-4" id="ts-tk-${arg1}" disabled>
+                            <input type="text" name="task" value="${arg2}" class="task form-control fs-5" id="ts-tk-${arg1}" disabled>
                         </div>
                     </div> 
                 </div>
                 <div class="tasksBtnBlk"> 
-                    <button type="button" class="btn editBtn text-white me-2" id="ts-eBtn-${arg1}" onclick="editTask('ts-tkw-${arg1}','ts-chk-${arg1}','ts-tk-${arg1}','ts-eBtn-${arg1}')">
+                    <button type="button" class="btn editBtn text-white me-2" id="ts-eBtn-${arg1}" onclick="editTask('ts-${arg1}', 'ts-tkw-${arg1}','ts-chk-${arg1}','ts-tk-${arg1}','ts-eBtn-${arg1}')">
                         <i class="fas fa-edit fs-6"></i>
                     </button>
                     <button type="button" class="btn delBtn text-white" onclick="deleteTask('ts-${arg1}')">
@@ -227,7 +244,7 @@ function removeChk(chkArg3, chkArg4)
 }
 
 
-function editTask(tkwId,chkId2,tkId,eId)
+function editTask(tsId1, tkwId,chkId2,tkId,eId)
 {
     let temp = document.getElementById(`${chkId2}`).classList;
 
@@ -252,7 +269,10 @@ function editTask(tkwId,chkId2,tkId,eId)
         document.getElementById(`${tkwId}`).classList.remove('tkwBorder');
         document.getElementById(`${tkId}`).setAttribute('disabled','');
         editFlags[eId] =  false; 
+        activeUser.taskList[extractId(tsId1)][3] = document.getElementById(tkId).value;
+        setData();
     }
+    
 }
 
 function deleteTask(delId)
@@ -263,6 +283,7 @@ function deleteTask(delId)
     activeUser.taskList.splice(extId,1);
     console.log('after Deletion : ', activeUser); 
     setData();
+    initAddTask();
 }
 
 function extractId(id1)

@@ -16,7 +16,7 @@ let logOutBtn = document.getElementById('logOutBtn');
 let userdpPic = document.getElementById('userdpPic');
 let uNameTag = document.getElementById('uNameTag'); 
 let usrTaskList = [];
-let successFlag = true;
+
 // import {loadData, setData} from "./logiPage.js"
 // loadData();
 
@@ -28,11 +28,7 @@ function loader()
     preloader();
     loadData();
     whoIsActive();
-    if (successFlag == true)
-    {
-        setTimeout(successfull, 1200);
-        successFlag = false;
-    }
+    setTimeout(successfull, 1200);
 }
 
 function preloader()
